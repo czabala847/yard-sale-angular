@@ -1,3 +1,7 @@
-<img width="200" [src]="product.image" alt="Imagen {{ product.name }}" />
-<h2>{{ product.price }}</h2>
-<p>{{ product.name }}</p>
+<div class="Product">
+  <app-img [img]="product.image"></app-img>
+  <div class="Product__text">
+    <h2 class="Product__price">{{ product.price }}</h2>
+    <p class="Product__name">{{ product.name }}</p>
+  </div>
+</div>

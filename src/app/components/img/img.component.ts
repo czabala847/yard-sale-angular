@@ -10,17 +10,18 @@ export class ImgComponent implements OnInit {
 
   defaultImage: string = './assets/images/defaultjpg.jpg';
 
-  @Input() url: string = '';
+  @Input() img: string = '';
   @Output() loaded = new EventEmitter<string>();
 
   ngOnInit(): void {}
 
   imageError() {
-    this.url = this.defaultImage;
+    this.img = this.defaultImage;
   }
 
+  //Enviar al componente padre
   imageLoaded() {
     console.log('Hijo');
-    this.loaded.emit(this.url);
+    this.loaded.emit(this.img);
   }
 }
