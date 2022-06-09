@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductInterface } from 'src/app/models/product.model';
+import { StoreService } from 'src/app/services/store.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-products',
@@ -7,46 +9,25 @@ import { ProductInterface } from 'src/app/models/product.model';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products: ProductInterface[] = [
-    {
-      id: '1',
-      name: 'EL mejor juguete',
-      price: 565,
-      image: './assets/images/toy.jpg',
-    },
-    {
-      id: '2',
-      name: 'Bicicleta casi nueva',
-      price: 356,
-      image: './assets/images/bike.jpg',
-    },
-    {
-      id: '3',
-      name: 'Colección de albumes',
-      price: 34,
-      image: './assets/images/album.jpg',
-    },
-    {
-      id: '4',
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/books.jpg',
-    },
-    {
-      id: '5',
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/books.jpg',
-    },
-    {
-      id: '6',
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/books.jpg',
-    },
-  ];
+  total: number = 0;
+  quantity: number = 0;
 
-  constructor() {}
+  products: ProductInterface[] = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private storeService: StoreService,
+    private productsService: ProductsService
+  ) {}
+
+  ngOnInit(): void {
+    this.productsService.getProducts().subscribe((data) => {
+      this.products = data;
+    });
+  }
+
+  addProductToCart(product: ProductInterface) {
+    this.storeService.addProduct(product);
+    this.quantity = this.storeService.getQuantityCart();
+    this.total = this.storeService.getTotalCart();
+  }
 }

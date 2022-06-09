@@ -1,5 +1,8 @@
+<p [style.marginTop.rem]="1">Cantidad en el carrito: {{ quantity }}</p>
+<p [style.marginTop.rem]="1">Total: {{ total }}</p>
 <div class="Products">
   <app-product
+    (productAdd)="addProductToCart($event)"
     [product]="product"
     *ngFor="let product of products"
   ></app-product>

@@ -1,4 +1,15 @@
+.ImageContainer {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
 .Image {
-  max-width: 100%;
+  width: 100%;
+  // height: 80%;
+  object-fit: cover;
   border-radius: 10px;
 }

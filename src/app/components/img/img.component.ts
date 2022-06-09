@@ -21,7 +21,6 @@ export class ImgComponent implements OnInit {
 
   //Enviar al componente padre
   imageLoaded() {
-    console.log('Hijo');
     this.loaded.emit(this.img);
   }
 }
