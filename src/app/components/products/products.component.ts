@@ -30,4 +30,10 @@ export class ProductsComponent implements OnInit {
     this.quantity = this.storeService.getQuantityCart();
     this.total = this.storeService.getTotalCart();
   }
+
+  handleProductShow(id: number) {
+    this.productsService.getProduct(id).subscribe((data) => {
+      console.log(data);
+    });
+  }
 }

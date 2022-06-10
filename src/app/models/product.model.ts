@@ -1,8 +1,14 @@
+interface CategoryInterface {
+  id: number;
+  name: string;
+  typeImg: string;
+}
+
 export interface ProductInterface {
-  id: string;
+  id: number;
   title: string;
   price: number;
   description: string;
-  category: string;
-  image: string;
+  category: CategoryInterface;
+  images: string[];
 }

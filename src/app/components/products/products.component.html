@@ -3,6 +3,7 @@
 <div class="Products">
   <app-product
     (productAdd)="addProductToCart($event)"
+    (productShow)="handleProductShow($event)"
     [product]="product"
     *ngFor="let product of products"
   ></app-product>

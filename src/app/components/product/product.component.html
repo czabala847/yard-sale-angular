@@ -1,10 +1,18 @@
+<button (click)="toggleDetail()">Ver detalle</button>
 <div class="Product">
-  <app-img [img]="product.image"></app-img>
+  <app-img [img]="product.images[0]"></app-img>
   <div class="Product__text">
-    <h2 class="Product__price">{{ product.price | currency:'COP' }}</h2>
+    <h2 class="Product__price">{{ product.price | currency: "COP" }}</h2>
     <p class="Product__name">{{ product.title }}</p>
   </div>
   <div class="Product__button">
     <button (click)="addToCart()">Add to cart</button>
+    <button (click)="handleDetail()">Ver detalle</button>
+  </div>
+</div>
+<div class="Product__detail" [class.active]="showDetail">
+  <div>
+    <button (click)="toggleDetail()">Close</button>
+    Contenido
   </div>
 </div>
