@@ -10,12 +10,12 @@ export class ProductComponent implements OnInit {
   constructor() {}
 
   @Input() product: ProductInterface = {
-    id: 0,
+    id: '',
     title: '',
     price: 0,
     description: '',
     category: {
-      id: 0,
+      id: '',
       name: '',
       typeImg: '',
     },
@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   };
 
   @Output() productAdd = new EventEmitter<ProductInterface>();
-  @Output() productShow = new EventEmitter<number>();
+  @Output() productShow = new EventEmitter<string>();
 
   ngOnInit(): void {}
 

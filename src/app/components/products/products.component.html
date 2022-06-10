@@ -1,6 +1,6 @@
 <p [style.marginTop.rem]="1">Cantidad en el carrito: {{ quantity }}</p>
 <p [style.marginTop.rem]="1">Total: {{ total }}</p>
-<button (click)="toggleDetail()">Ver detalle</button>
+<button (click)="handleCreate()">Agregar producto</button>
 <div class="Products">
   <app-product
     (productAdd)="addProductToCart($event)"
@@ -20,6 +20,8 @@
         </ng-template>
       </swiper>
       <p>{{ productChosen.price }}</p>
+      <button (click)="handleUpdate()">Actualizar</button>
+      <button (click)="handleDelete()">Eliminar</button>
     </div>
   </div>
 </div>

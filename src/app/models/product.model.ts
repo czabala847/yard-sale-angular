@@ -1,14 +1,22 @@
 interface CategoryInterface {
-  id: number;
+  id: string;
   name: string;
   typeImg: string;
 }
 
 export interface ProductInterface {
-  id: number;
+  id: string;
   title: string;
   price: number;
   description: string;
   category: CategoryInterface;
   images: string[];
 }
+
+export interface ProductCreateDTOInterface
+  extends Omit<ProductInterface, 'id' | 'category'> {
+  categoryId: number;
+}
+
+export interface ProductUpdateDTOInterface
+  extends Partial<ProductCreateDTOInterface> {}
