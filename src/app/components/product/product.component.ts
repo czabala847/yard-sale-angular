@@ -7,8 +7,6 @@ import { ProductInterface } from 'src/app/models/product.model';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  showDetail: boolean = false;
-
   constructor() {}
 
   @Input() product: ProductInterface = {
@@ -37,9 +35,5 @@ export class ProductComponent implements OnInit {
   //Enviar información al padre
   handleDetail() {
     this.productShow.emit(this.product.id);
-  }
-
-  toggleDetail() {
-    this.showDetail = !this.showDetail;
   }
 }

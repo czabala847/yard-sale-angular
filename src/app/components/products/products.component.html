@@ -1,5 +1,6 @@
 <p [style.marginTop.rem]="1">Cantidad en el carrito: {{ quantity }}</p>
 <p [style.marginTop.rem]="1">Total: {{ total }}</p>
+<button (click)="toggleDetail()">Ver detalle</button>
 <div class="Products">
   <app-product
     (productAdd)="addProductToCart($event)"
@@ -7,4 +8,18 @@
     [product]="product"
     *ngFor="let product of products"
   ></app-product>
+</div>
+<div class="Product__detail" [class.active]="showDetail">
+  <div>
+    <button (click)="toggleDetail()">Close</button>
+    <div *ngIf="productChosen">
+      <h3>{{ productChosen.title }}</h3>
+      <swiper [slidesPerView]="1">
+        <ng-template swiperSlide *ngFor="let img of productChosen.images">
+          <img [src]="img" alt="Imagen {{ productChosen.title }}" />
+        </ng-template>
+      </swiper>
+      <p>{{ productChosen.price }}</p>
+    </div>
+  </div>
 </div>

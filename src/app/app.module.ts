@@ -8,6 +8,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ImgComponent } from './components/img/img.component';
 import { ProductsComponent } from './components/products/products.component';
 import { NavComponent } from './components/nav/nav.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { NavComponent } from './components/nav/nav.component';
     ProductsComponent,
     NavComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, SwiperModule],
   providers: [],
   bootstrap: [AppComponent],
 })

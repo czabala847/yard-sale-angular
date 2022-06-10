@@ -14,3 +14,21 @@
     grid-template-columns: repeat(5, 1fr);
   }
 }
+
+.Product__detail {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: all ease-out 0.5s;
+  transform: translateX(100%);
+  padding: 1rem;
+  &.active {
+    transform: translateX(0);
+  }
+}

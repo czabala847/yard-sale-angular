@@ -1,4 +1,3 @@
-<button (click)="toggleDetail()">Ver detalle</button>
 <div class="Product">
   <app-img [img]="product.images[0]"></app-img>
   <div class="Product__text">
@@ -7,12 +6,6 @@
   </div>
   <div class="Product__button">
     <button (click)="addToCart()">Add to cart</button>
-    <button (click)="handleDetail()">Ver detalle</button>
-  </div>
-</div>
-<div class="Product__detail" [class.active]="showDetail">
-  <div>
-    <button (click)="toggleDetail()">Close</button>
-    Contenido
+    <button (click)="handleDetail()">Show Detail</button>
   </div>
 </div>
