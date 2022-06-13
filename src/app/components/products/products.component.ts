@@ -34,6 +34,8 @@ export class ProductsComponent implements OnInit {
   };
   showDetail: boolean = false;
 
+  statusDetail: 'init' | 'loading' | 'success' | 'error' = 'init';
+
   constructor(
     private storeService: StoreService,
     private productsService: ProductsService
@@ -50,10 +52,18 @@ export class ProductsComponent implements OnInit {
   }
 
   handleProductShow(id: string) {
-    this.productsService.getProduct(id).subscribe((data) => {
-      this.toggleDetail();
-      this.productChosen = data;
-    });
+    this.statusDetail = 'loading';
+    this.productsService.getProduct(id).subscribe(
+      (data) => {
+        this.toggleDetail();
+        this.productChosen = data;
+        this.statusDetail = 'success';
+      },
+      (response) => {
+        console.log('Error', response.error.message);
+        this.statusDetail = 'error';
+      }
+    );
   }
 
   toggleDetail() {

@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import {
   ProductInterface,
   ProductCreateDTOInterface,
   ProductUpdateDTOInterface,
 } from '../models/product.model';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +33,19 @@ export class ProductsService {
   }
 
   getProduct(id: string) {
-    return this.http.get<ProductInterface>(`${this.url}/${id}`);
+    return this.http.get<ProductInterface>(`${this.url}/${id}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 500) {
+          return throwError('Algo fallo en el server!!!');
+        }
+
+        if (error.status === 404) {
+          return throwError('Producto no existe!!!');
+        }
+
+        return throwError('Ups Ocurrio un error!!!');
+      })
+    );
   }
 
   create(dto: ProductCreateDTOInterface) {
