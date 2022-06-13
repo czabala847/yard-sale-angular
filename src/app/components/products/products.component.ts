@@ -16,6 +16,9 @@ export class ProductsComponent implements OnInit {
   total: number = 0;
   quantity: number = 0;
 
+  limit: number = 10;
+  offset: number = 0;
+
   products: ProductInterface[] = [];
   productChosen: ProductInterface = {
     id: '',
@@ -37,9 +40,7 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productsService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.loadMore();
   }
 
   addProductToCart(product: ProductInterface) {
@@ -105,5 +106,14 @@ export class ProductsComponent implements OnInit {
       this.products.splice(index, 1);
       this.showDetail = false;
     });
+  }
+
+  loadMore() {
+    this.productsService
+      .getProducts(this.limit, this.offset)
+      .subscribe((data) => {
+        this.products = this.products.concat(data);
+        this.offset += this.limit;
+      });
   }
 }
