@@ -12,6 +12,7 @@ import { UserCreateDTOInterface } from './models/user.model';
 export class AppComponent {
   title = 'store';
   urlPadre: string = '';
+  token: string = '';
 
   constructor(
     private usersService: UsersService,
@@ -36,7 +37,12 @@ export class AppComponent {
 
   login() {
     this.authService.login('carlos@example.com', '112233').subscribe((data) => {
-      console.log(data);
+      console.log('token', data);
+      this.token = data.access_token;
     });
+  }
+
+  getProfile() {
+    this.authService.profile(this.token).subscribe((data) => console.log(data));
   }
 }

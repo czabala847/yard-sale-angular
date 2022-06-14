@@ -1,3 +1,3 @@
-export interface Auth {
-  access_toke: string;
+export interface AuthInterface {
+  access_token: string;
 }

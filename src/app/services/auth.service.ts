@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+import { AuthInterface } from '../models/auth.mode';
+import { UserInterface } from '../models/user.model';
+
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +16,29 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
-    return this.http.post(`${this.url}/login`, { email, password });
+    return this.http
+      .post<AuthInterface>(`${this.url}/login`, {
+        email,
+        password,
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const errorDetail = {
+            error: true,
+            name: error.name,
+            message: error.message,
+          };
+
+          return throwError(errorDetail);
+        })
+      );
   }
 
-  profile() {
-    return this.http.get(`${this.url}/profile`);
+  profile(token: string) {
+    return this.http.get<UserInterface>(`${this.url}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

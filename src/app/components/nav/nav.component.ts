@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { switchMap } from 'rxjs/operators';
+import { UserInterface } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +16,16 @@ export class NavComponent implements OnInit, OnDestroy {
   count: number = 0;
   private countSubs!: Subscription;
 
-  constructor(private store: StoreService) {}
+  token: string | null = null;
+
+  userLogin: UserInterface = {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+  };
+
+  constructor(private store: StoreService, private authService: AuthService) {}
 
   ngOnInit(): void {
     //suscribiéndose al estado global que ofrece el servicio StoreService
@@ -28,5 +40,25 @@ export class NavComponent implements OnInit, OnDestroy {
 
   toggleMenu() {
     this.activeMenu = !this.activeMenu;
+  }
+
+  login() {
+    this.authService
+      .login('carlos@example.com', '112233')
+      .pipe(
+        switchMap((token) => {
+          this.token = token.access_token;
+          return this.authService.profile(this.token);
+        })
+      )
+      .subscribe(
+        (profile) => {
+          this.userLogin = profile;
+          console.log(this.userLogin);
+        },
+        (error) => {
+          alert(`Ocurrio un error ${error.message}`);
+        }
+      );
   }
 }
