@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
+import { TokenService } from './token.service';
+
 import { AuthInterface } from '../models/auth.mode';
 import { UserInterface } from '../models/user.model';
 
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -13,7 +15,7 @@ import { throwError } from 'rxjs';
 export class AuthService {
   private url: string = 'https://young-sands-07814.herokuapp.com/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   login(email: string, password: string) {
     return this.http
@@ -22,6 +24,10 @@ export class AuthService {
         password,
       })
       .pipe(
+        tap((response) => {
+          //Antes de enviar la respuesta guardar el token en localStorage
+          this.tokenService.setToken(response.access_token);
+        }),
         catchError((error: HttpErrorResponse) => {
           const errorDetail = {
             error: true,
@@ -34,11 +40,7 @@ export class AuthService {
       );
   }
 
-  profile(token: string) {
-    return this.http.get<UserInterface>(`${this.url}/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  profile() {
+    return this.http.get<UserInterface>(`${this.url}/profile`);
   }
 }

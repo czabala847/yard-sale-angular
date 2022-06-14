@@ -43,6 +43,6 @@ export class AppComponent {
   }
 
   getProfile() {
-    this.authService.profile(this.token).subscribe((data) => console.log(data));
+    this.authService.profile().subscribe((data) => console.log(data));
   }
 }

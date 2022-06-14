@@ -16,14 +16,7 @@ export class NavComponent implements OnInit, OnDestroy {
   count: number = 0;
   private countSubs!: Subscription;
 
-  token: string | null = null;
-
-  userLogin: UserInterface = {
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-  };
+  profile: UserInterface | null = null;
 
   constructor(private store: StoreService, private authService: AuthService) {}
 
@@ -45,16 +38,11 @@ export class NavComponent implements OnInit, OnDestroy {
   login() {
     this.authService
       .login('carlos@example.com', '112233')
-      .pipe(
-        switchMap((token) => {
-          this.token = token.access_token;
-          return this.authService.profile(this.token);
-        })
-      )
+      .pipe(switchMap(() => this.authService.profile()))
       .subscribe(
         (profile) => {
-          this.userLogin = profile;
-          console.log(this.userLogin);
+          this.profile = profile;
+          console.log(this.profile);
         },
         (error) => {
           alert(`Ocurrio un error ${error.message}`);
