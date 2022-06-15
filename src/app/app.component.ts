@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
+import { FilesService } from './services/files.service';
 
 import { UserCreateDTOInterface } from './models/user.model';
 
@@ -16,7 +17,8 @@ export class AppComponent {
 
   constructor(
     private usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private filesService: FilesService
   ) {}
 
   handleLoaded(img: string) {
@@ -44,5 +46,15 @@ export class AppComponent {
 
   getProfile() {
     this.authService.profile().subscribe((data) => console.log(data));
+  }
+
+  downloadPDF() {
+    this.filesService
+      .getFile(
+        'my.pdf',
+        'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
+        'application/pdf'
+      )
+      .subscribe();
   }
 }
