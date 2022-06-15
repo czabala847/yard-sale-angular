@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   ProductCreateDTOInterface,
   ProductInterface,
@@ -16,10 +16,10 @@ export class ProductsComponent implements OnInit {
   total: number = 0;
   quantity: number = 0;
 
-  limit: number = 10;
-  offset: number = 0;
+  @Input() products: ProductInterface[] = [];
 
-  products: ProductInterface[] = [];
+  @Output() loadListener = new EventEmitter();
+
   productChosen: ProductInterface = {
     id: '',
     title: '',
@@ -41,9 +41,7 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService
   ) {}
 
-  ngOnInit(): void {
-    this.loadMore();
-  }
+  ngOnInit(): void {}
 
   addProductToCart(product: ProductInterface) {
     this.storeService.addProduct(product);
@@ -118,12 +116,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  loadMore() {
-    this.productsService
-      .getProducts(this.limit, this.offset)
-      .subscribe((data) => {
-        this.products = this.products.concat(data);
-        this.offset += this.limit;
-      });
+  handleLoadMore() {
+    this.loadListener.emit();
   }
 }

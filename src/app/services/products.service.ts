@@ -19,9 +19,9 @@ import { throwError } from 'rxjs';
 export class ProductsService {
   constructor(private http: HttpClient) {}
 
-  private url: string = 'https://young-sands-07814.herokuapp.com/api/products';
+  private url: string = 'https://young-sands-07814.herokuapp.com/api';
 
-  getProducts(limit?: number, offset?: number) {
+  private paginationParams(limit?: number, offset?: number) {
     let params: HttpParams = new HttpParams();
 
     if (limit != undefined && offset != undefined) {
@@ -29,11 +29,26 @@ export class ProductsService {
       params = params.set('offset', offset);
     }
 
-    return this.http.get<ProductInterface[]>(this.url, { params });
+    return params;
+  }
+
+  getProducts(limit?: number, offset?: number) {
+    const params = this.paginationParams(limit, offset);
+    return this.http.get<ProductInterface[]>(`${this.url}/products`, {
+      params,
+    });
+  }
+
+  getByCategory(categoryId: string, limit?: number, offset?: number) {
+    const params = this.paginationParams(limit, offset);
+    return this.http.get<ProductInterface[]>(
+      `${this.url}/categories/${categoryId}/products`,
+      { params }
+    );
   }
 
   getProduct(id: string) {
-    return this.http.get<ProductInterface>(`${this.url}/${id}`).pipe(
+    return this.http.get<ProductInterface>(`${this.url}/products/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 500) {
           return throwError('Algo fallo en el server!!!');
@@ -53,10 +68,10 @@ export class ProductsService {
   }
 
   update(id: string, dto: ProductUpdateDTOInterface) {
-    return this.http.put<ProductInterface>(`${this.url}/${id}`, dto);
+    return this.http.put<ProductInterface>(`${this.url}/products/${id}`, dto);
   }
 
   delete(id: string) {
-    return this.http.delete<boolean>(`${this.url}/${id}`);
+    return this.http.delete<boolean>(`${this.url}/products/${id}`);
   }
 }
