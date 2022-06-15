@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'store';
   urlPadre: string = '';
   token: string = '';
+  imgResult: string = '';
 
   constructor(
     private usersService: UsersService,
@@ -56,5 +57,16 @@ export class AppComponent {
         'application/pdf'
       )
       .subscribe();
+  }
+
+  handleChange(event: Event) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+
+    if (file) {
+      this.filesService.uploadFile(file).subscribe((data) => {
+        this.imgResult = data.location;
+      });
+    }
   }
 }
