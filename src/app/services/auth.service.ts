@@ -9,6 +9,8 @@ import { UserInterface } from '../models/user.model';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
+import { checkToken } from '../interceptors/token.interceptor';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -41,6 +43,8 @@ export class AuthService {
   }
 
   profile() {
-    return this.http.get<UserInterface>(`${this.url}/profile`);
+    return this.http.get<UserInterface>(`${this.url}/profile`, {
+      context: checkToken(),
+    });
   }
 }
