@@ -1,1 +1,4 @@
-<app-products [products]="products"></app-products>
+<app-products
+  (loadListener)="handleLoadListener()"
+  [products]="products"
+></app-products>

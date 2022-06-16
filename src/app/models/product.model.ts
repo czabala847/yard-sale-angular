@@ -1,8 +1,4 @@
-interface CategoryInterface {
-  id: string;
-  name: string;
-  typeImg: string;
-}
+import { CategoryInterface } from './category.model';
 
 export interface ProductInterface {
   id: string;

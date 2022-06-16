@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StoreService } from 'src/app/services/store.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { switchMap } from 'rxjs/operators';
+
+import { StoreService } from 'src/app/services/store.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { CategoriesService } from 'src/app/services/categories.service';
+
 import { UserInterface } from 'src/app/models/user.model';
+import { CategoryInterface } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-nav',
@@ -11,20 +15,25 @@ import { UserInterface } from 'src/app/models/user.model';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit, OnDestroy {
-  activeMenu: boolean = false;
-
-  count: number = 0;
   private countSubs!: Subscription;
+  public activeMenu: boolean = false;
+  public count: number = 0;
+  public profile: UserInterface | null = null;
+  public categories: CategoryInterface[] = [];
 
-  profile: UserInterface | null = null;
-
-  constructor(private store: StoreService, private authService: AuthService) {}
+  constructor(
+    private store: StoreService,
+    private authService: AuthService,
+    private categoriesService: CategoriesService
+  ) {}
 
   ngOnInit(): void {
     //suscribiéndose al estado global que ofrece el servicio StoreService
     this.store.storeCart$.subscribe((products) => {
       this.count = products.length;
     });
+
+    this.getAllCategories();
   }
 
   ngOnDestroy(): void {
@@ -48,5 +57,11 @@ export class NavComponent implements OnInit, OnDestroy {
           alert(`Ocurrio un error ${error.message}`);
         }
       );
+  }
+
+  getAllCategories() {
+    this.categoriesService.getAll().subscribe((data) => {
+      this.categories = data;
+    });
   }
 }
