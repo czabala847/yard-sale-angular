@@ -17,7 +17,12 @@ export class ProductsComponent implements OnInit {
   quantity: number = 0;
 
   @Input() products: ProductInterface[] = [];
-
+  @Input()
+  set productId(id: string | null) {
+    if (id) {
+      this.handleProductShow(id);
+    }
+  }
   @Output() loadListener = new EventEmitter();
 
   productChosen: ProductInterface = {
@@ -53,7 +58,10 @@ export class ProductsComponent implements OnInit {
     this.statusDetail = 'loading';
     this.productsService.getProduct(id).subscribe(
       (data) => {
-        this.toggleDetail();
+        if (!this.showDetail) {
+          this.showDetail = true;
+        }
+
         this.productChosen = data;
         this.statusDetail = 'success';
       },

@@ -8,6 +8,6 @@
   </div>
   <div class="Product__button">
     <button (click)="addToCart()">Add to cart</button>
-    <button (click)="handleDetail()">Show Detail</button>
+    <a routerLink="." [queryParams]="{ product: product.id }">Show Detail</a>
   </div>
 </div>
