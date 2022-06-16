@@ -4,24 +4,28 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { ProductComponent } from './components/product/product.component';
-import { ImgComponent } from './components/img/img.component';
-import { ProductsComponent } from './components/products/products.component';
-import { NavComponent } from './components/nav/nav.component';
 import { SwiperModule } from 'swiper/angular';
-import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { MyCartComponent } from './pages/my-cart/my-cart.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { RecoveryComponent } from './pages/recovery/recovery.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { AppComponent } from './app.component';
+
+import { TokenInterceptor } from './interceptors/token.interceptor';
+
+import { ProductComponent } from './website/components/product/product.component';
+import { ImgComponent } from './website/components/img/img.component';
+import { ProductsComponent } from './website/components/products/products.component';
+import { NavComponent } from './website/components/nav/nav.component';
+
+import { HomeComponent } from './website/pages/home/home.component';
+import { NotFoundComponent } from './website/pages/not-found/not-found.component';
+import { CategoryComponent } from './website/pages/category/category.component';
+import { MyCartComponent } from './website/pages/my-cart/my-cart.component';
+import { LoginComponent } from './website/pages/login/login.component';
+import { RegisterComponent } from './website/pages/register/register.component';
+import { RecoveryComponent } from './website/pages/recovery/recovery.component';
+import { ProfileComponent } from './website/pages/profile/profile.component';
+import { ProductDetailComponent } from './website/pages/product-detail/product-detail.component';
+import { LayoutComponent } from './website/components/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,7 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     RecoveryComponent,
     ProfileComponent,
     ProductDetailComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
