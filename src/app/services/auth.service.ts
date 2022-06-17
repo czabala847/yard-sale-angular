@@ -8,6 +8,7 @@ import { UserInterface } from '../models/user.model';
 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { checkToken } from '../interceptors/token.interceptor';
 
@@ -16,6 +17,8 @@ import { checkToken } from '../interceptors/token.interceptor';
 })
 export class AuthService {
   private url: string = 'https://young-sands-07814.herokuapp.com/api/auth';
+  private storeProfile = new BehaviorSubject<UserInterface | null>(null);
+  storeProfile$ = this.storeProfile.asObservable();
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
@@ -43,9 +46,13 @@ export class AuthService {
   }
 
   profile() {
-    return this.http.get<UserInterface>(`${this.url}/profile`, {
-      context: checkToken(),
-    });
+    console.log('Ejecutando el profile');
+
+    return this.http
+      .get<UserInterface>(`${this.url}/profile`, {
+        context: checkToken(),
+      })
+      .pipe(tap((profile) => this.storeProfile.next(profile)));
   }
 
   logout() {

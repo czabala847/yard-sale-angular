@@ -36,6 +36,10 @@ export class NavComponent implements OnInit, OnDestroy {
     });
 
     this.getAllCategories();
+
+    this.authService.storeProfile$.subscribe((profile) => {
+      this.profile = profile;
+    });
   }
 
   ngOnDestroy(): void {
@@ -51,9 +55,8 @@ export class NavComponent implements OnInit, OnDestroy {
       .login('john@mail.com', 'changeme')
       .pipe(switchMap(() => this.authService.profile()))
       .subscribe(
-        (profile) => {
-          this.profile = profile;
-          console.log(this.profile);
+        () => {
+          this.router.navigate(['profile']);
         },
         (error) => {
           alert(`Ocurrio un error ${error.message}`);

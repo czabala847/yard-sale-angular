@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { FilesService } from './services/files.service';
+import { TokenService } from './services/token.service';
 
 import { UserCreateDTOInterface } from './models/user.model';
 
@@ -10,7 +11,7 @@ import { UserCreateDTOInterface } from './models/user.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'store';
   urlPadre: string = '';
   token: string = '';
@@ -19,8 +20,16 @@ export class AppComponent {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private tokenService: TokenService
   ) {}
+
+  ngOnInit(): void {
+    const token = this.tokenService.getToken();
+    if (token) {
+      this.authService.profile().subscribe();
+    }
+  }
 
   handleLoaded(img: string) {
     console.log('padre', img);
