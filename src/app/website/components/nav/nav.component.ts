@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { StoreService } from 'src/app/services/store.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,7 +25,8 @@ export class NavComponent implements OnInit, OnDestroy {
   constructor(
     private store: StoreService,
     private authService: AuthService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +48,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   login() {
     this.authService
-      .login('carlos@example.com', '112233')
+      .login('john@mail.com', 'changeme')
       .pipe(switchMap(() => this.authService.profile()))
       .subscribe(
         (profile) => {
@@ -57,6 +59,12 @@ export class NavComponent implements OnInit, OnDestroy {
           alert(`Ocurrio un error ${error.message}`);
         }
       );
+  }
+
+  logout() {
+    this.authService.logout();
+    this.profile = null;
+    this.router.navigate(['home']);
   }
 
   getAllCategories() {

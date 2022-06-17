@@ -47,4 +47,8 @@ export class AuthService {
       context: checkToken(),
     });
   }
+
+  logout() {
+    this.tokenService.removeToken();
+  }
 }

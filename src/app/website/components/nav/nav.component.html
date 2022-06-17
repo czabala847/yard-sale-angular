@@ -41,7 +41,8 @@
     </nav>
     <div class="info">
       <div class="account" *ngIf="profile; else templateLogin">
-        {{ profile?.email }}
+        <a routerLink="profile">{{ profile.email }}</a>
+        <button (click)="logout()">Logout</button>
       </div>
       <ng-template #templateLogin>
         <button [style.marginRight.rem]="1" (click)="login()">Login</button>
