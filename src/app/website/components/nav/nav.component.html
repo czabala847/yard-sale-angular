@@ -13,9 +13,13 @@
   <div class="side-menu" [class.active]="activeMenu">
     <button (click)="toggleMenu()">Close</button>
     <ul>
-      <li><a href="">All</a></li>
-      <li><a href="">Clothes</a></li>
-      <li><a href="">Electronics</a></li>
+      <li *ngFor="let category of categories">
+        <a
+          routerLinkActive="active"
+          [routerLink]="['/category', category.id]"
+          >{{ category.name }}</a
+        >
+      </li>
     </ul>
   </div>
 </div>

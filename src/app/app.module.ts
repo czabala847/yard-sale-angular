@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { QuicklinkModule } from 'ngx-quicklink';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
+    QuicklinkModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
